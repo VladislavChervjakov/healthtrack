@@ -18,12 +18,12 @@ export const FormInputLabel = styled.label`
   left: 5px;
   top: 10px;
   transition: 300ms ease all;
-  ${({ shrink }) => shrink && shrinkLabelStyles};
+  ${({ shrink }) => shrink && shrinkLabelStyles}
 `;
 
 export const Input = styled.input`
   background: none;
-  background-color: white;
+  background-color: #fff;
   color: ${subColor};
   font-size: 18px;
   padding: 10px 10px 10px 5px;
@@ -39,7 +39,7 @@ export const Input = styled.input`
   }
 
   &:focus ~ ${FormInputLabel} {
-    ${shrinkLabelStyles};
+    ${shrinkLabelStyles}
   }
 `;
 

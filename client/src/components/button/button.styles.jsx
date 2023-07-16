@@ -7,12 +7,13 @@ const submitColor = "#00FF00";
 
 export const BaseButton = styled.button`
   min-width: 165px;
-  width: auto;
+  width: ${(fullWidth) => (fullWidth ? "100%" : "auto")};
   line-height: 50px;
   padding: 0 25px;
   background-color: ${baseColor};
   border-radius: 10px;
   color: ${textColor};
+  cursor: pointer;
 
   &:hover {
     background-color: ${textColor};

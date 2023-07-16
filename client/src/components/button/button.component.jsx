@@ -20,10 +20,14 @@ const getButton = (buttonType = BUTTON_TYPES.base) =>
     [BUTTON_TYPES.submit]: SubmitButton,
   }[buttonType]);
 
-const Button = ({ children, buttonType, ...otherProps }) => {
+const Button = ({ children, buttonType, fullWidth, ...otherProps }) => {
   const CustomButton = getButton(buttonType);
 
-  return <CustomButton {...otherProps}>{children}</CustomButton>;
+  return (
+    <CustomButton fullWidth={fullWidth} {...otherProps}>
+      {children}
+    </CustomButton>
+  );
 };
 
 export default Button;

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   FormContainer,
   AuthHeading,
@@ -9,13 +8,14 @@ import Button, { BUTTON_TYPES } from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 
 const defaultFormFields = {
+  userName: "",
   email: "",
   password: "",
 };
 
-const SignInForm = () => {
+const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { email, password } = formFields;
+  const { userName, email, password } = formFields;
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -36,13 +36,19 @@ const SignInForm = () => {
   return (
     <FormContainer>
       <AuthHeading>
-        <h1>Sign in</h1>
+        <h1>Sign Up</h1>
         <span>
-          Doesn`t have an account?{" "}
-          <AuthLink to="/sign-up">Create new account</AuthLink>
+          Already have an account? <AuthLink to="/sign-in">Sign in</AuthLink>
         </span>
       </AuthHeading>
       <form onSubmit={handleSubmit}>
+        <FormInput
+          label="Name"
+          type="text"
+          required
+          onChange={handleChange}
+          value={userName}
+        />
         <FormInput
           label="Email"
           type="email"
@@ -58,11 +64,11 @@ const SignInForm = () => {
           value={password}
         />
         <Button fullWidth={true} buttonType={BUTTON_TYPES.base} type="submit">
-          Sign In
+          Sign Up
         </Button>
       </form>
     </FormContainer>
   );
 };
 
-export default SignInForm;
+export default SignUpForm;
