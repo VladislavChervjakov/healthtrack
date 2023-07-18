@@ -2,9 +2,7 @@ const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const {
-  emailExists,
   createNewUser,
-  checkPassword,
   getUserByEmail,
 } = require("../../models/user/user.model");
 const {
@@ -33,7 +31,10 @@ async function httpCreateUser(req, res) {
 
   await createNewUser(newUser);
 
-  return res.status(201).json(newUser.id);
+  return res.status(201).json({
+    success: true,
+    redirectUrl: "sign-in",
+  });
 }
 
 async function httpLogin(req, res) {
@@ -62,9 +63,19 @@ async function httpLogin(req, res) {
     return res.status(400).json({ error: "Email or password is wrong" });
   }
 
-  const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET);
+  const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, {
+    expiresIn: "24h",
+  });
 
-  return res.header("auth-token", token).send(token);
+  res.cookie("auth-token", token, {
+    httpOnly: true,
+    secure: true,
+  });
+
+  return res.status(200).json({
+    success: true,
+    redirectUrl: "/",
+  });
 }
 
 module.exports = {

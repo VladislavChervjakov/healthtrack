@@ -9,6 +9,7 @@ function verifyToken(req, res, next) {
     req.user = verified;
     next();
   } catch (err) {
+    res.clearCookie();
     res.status(400).json({ err: "Invalid token" });
   }
 }
