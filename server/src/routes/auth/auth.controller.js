@@ -67,13 +67,9 @@ async function httpLogin(req, res) {
     expiresIn: "24h",
   });
 
-  res.cookie("auth-token", token, {
-    httpOnly: true,
-    secure: true,
-  });
-
   return res.status(200).json({
-    success: true,
+    user: user,
+    token: token,
     redirectUrl: "/",
   });
 }

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../store/user/user.actions";
 import {
   FormContainer,
   AuthHeading,
@@ -16,12 +18,16 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
+  const dispatch = useDispatch();
+
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    dispatch(loginUser(formFields));
 
     resetFormFields();
   };
@@ -45,6 +51,7 @@ const SignInForm = () => {
         <FormInput
           label="Email"
           type="email"
+          name="email"
           required
           onChange={handleChange}
           value={email}
@@ -52,6 +59,7 @@ const SignInForm = () => {
         <FormInput
           label="Psssword"
           type="password"
+          name="password"
           required
           onChange={handleChange}
           value={password}

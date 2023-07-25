@@ -4,8 +4,17 @@ import {
   AuthHeading,
   AuthLink,
 } from "../auth-styles/auth-styles";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Button, { BUTTON_TYPES } from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
+import {
+  selectIsSuccess,
+  selectUserError,
+  selectUserIsLoading,
+} from "../../store/user/user.selector";
+import { useEffect } from "react";
+import { registerUser } from "../../store/user/user.actions";
 
 const defaultFormFields = {
   userName: "",
@@ -17,12 +26,28 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { userName, email, password } = formFields;
 
+  const loading = useSelector(selectUserIsLoading);
+  const error = useSelector(selectUserError);
+  const success = useSelector(selectIsSuccess);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (success) {
+      navigate("/sign-in");
+    }
+  }, [navigate, success]);
+
+  const dispatch = useDispatch();
+
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    dispatch(registerUser(formFields));
 
     resetFormFields();
   };
@@ -35,6 +60,7 @@ const SignUpForm = () => {
 
   return (
     <FormContainer>
+      {error && <p>{error}</p>}
       <AuthHeading>
         <h1>Sign Up</h1>
         <span>
@@ -45,6 +71,7 @@ const SignUpForm = () => {
         <FormInput
           label="Name"
           type="text"
+          name="userName"
           required
           onChange={handleChange}
           value={userName}
@@ -52,6 +79,7 @@ const SignUpForm = () => {
         <FormInput
           label="Email"
           type="email"
+          name="email"
           required
           onChange={handleChange}
           value={email}
@@ -59,11 +87,17 @@ const SignUpForm = () => {
         <FormInput
           label="Psssword"
           type="password"
+          name="password"
           required
           onChange={handleChange}
           value={password}
         />
-        <Button fullWidth={true} buttonType={BUTTON_TYPES.base} type="submit">
+        <Button
+          fullWidth={true}
+          buttonType={BUTTON_TYPES.base}
+          disabled={loading}
+          type="submit"
+        >
           Sign Up
         </Button>
       </form>
