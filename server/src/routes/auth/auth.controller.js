@@ -67,6 +67,11 @@ async function httpLogin(req, res) {
     expiresIn: "24h",
   });
 
+  res.cookie("healthTrackAuthToken", token, {
+    maxAge: 86400 * 1000,
+    httpOnly: true,
+  });
+
   return res.status(200).json({
     user: user,
     token: token,

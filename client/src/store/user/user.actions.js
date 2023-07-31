@@ -1,6 +1,5 @@
 import axios from "axios";
-import { cookie } from "react-cookie";
-import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_URL = "http://localhost:8000/v1";
 
@@ -32,22 +31,17 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const config = {
+        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
       };
 
       const { data } = await axios.post(
-        `${API_URL}/login`,
+        `${API_URL}/auth/login`,
         { email, password },
         config
       );
-
-      cookie.set("health-auth-token", true, {
-        path: "/",
-        httpOnly: true,
-        expires: 24 * 60 * 60,
-      });
 
       return data;
     } catch (error) {

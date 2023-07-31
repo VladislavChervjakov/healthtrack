@@ -25,6 +25,7 @@ export const userSlice = createSlice({
     [loginUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.currentUser = payload;
+      console.log(payload);
       state.userToken = payload.token;
     },
     [loginUser.rejected]: (state, { payload }) => {
