@@ -33,7 +33,6 @@ async function httpCreateUser(req, res) {
 
   return res.status(201).json({
     success: true,
-    redirectUrl: "sign-in",
   });
 }
 
@@ -42,7 +41,7 @@ async function httpLogin(req, res) {
 
   const { error } = loginValidation(loginUser);
   if (error) {
-    res.status(400).json({ error: error.details[0].message });
+    return res.status(400).json({ error: error.details[0].message });
   }
 
   // Get user by email
@@ -75,7 +74,6 @@ async function httpLogin(req, res) {
   return res.status(200).json({
     user: user,
     token: token,
-    redirectUrl: "/",
   });
 }
 

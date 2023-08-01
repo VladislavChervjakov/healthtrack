@@ -19,8 +19,10 @@ export const registerUser = createAsyncThunk(
         config
       );
     } catch (error) {
-      if (error.response && error.response.error) {
-        return rejectWithValue(error.response.error);
+      if (error.response.data && error.response.data.error) {
+        return rejectWithValue(error.response.data.error);
+      } else {
+        rejectWithValue(error);
       }
     }
   }
@@ -45,8 +47,10 @@ export const loginUser = createAsyncThunk(
 
       return data;
     } catch (error) {
-      if (error.response && error.response.error) {
-        return rejectWithValue(error.response.error);
+      if (error.response.data && error.response.data.error) {
+        return rejectWithValue(error.response.data.error);
+      } else {
+        return rejectWithValue(error);
       }
     }
   }

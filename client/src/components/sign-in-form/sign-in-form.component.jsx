@@ -1,6 +1,12 @@
+import { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../store/user/user.actions";
+import {
+  selectIsSuccess,
+  selectUserError,
+} from "../../store/user/user.selector";
 import {
   FormContainer,
   AuthHeading,
@@ -19,6 +25,20 @@ const SignInForm = () => {
   const { email, password } = formFields;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const success = useSelector(selectIsSuccess);
+  const error = useSelector(selectUserError);
+
+  useEffect(() => {
+    if (success) {
+      console.log(success);
+      resetFormFields();
+      navigate("/dashboard");
+    } else if (error) {
+      alert(error);
+    }
+  }, [navigate, success, error]);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
