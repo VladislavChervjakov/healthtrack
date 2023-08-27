@@ -9,12 +9,14 @@ import { useNavigate } from "react-router-dom";
 import Button, { BUTTON_TYPES } from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import {
+  selectCurrentUser,
   selectIsSuccess,
   selectUserError,
   selectUserIsLoading,
 } from "../../store/user/user.selector";
 import { useEffect } from "react";
 import { registerUser } from "../../store/user/user.actions";
+import Error from "../error/error.component";
 
 const defaultFormFields = {
   userName: "",
@@ -29,14 +31,17 @@ const SignUpForm = () => {
   const loading = useSelector(selectUserIsLoading);
   const error = useSelector(selectUserError);
   const success = useSelector(selectIsSuccess);
+  const currentUser = useSelector(selectCurrentUser);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (success) {
       navigate("/sign-in");
+    } else if (currentUser) {
+      navigate("/dashboard");
     }
-  }, [navigate, success]);
+  }, [navigate, success, currentUser]);
 
   const dispatch = useDispatch();
 
@@ -100,6 +105,7 @@ const SignUpForm = () => {
         >
           Sign Up
         </Button>
+        {error ? <Error errorText={error} /> : ""}
       </form>
     </FormContainer>
   );

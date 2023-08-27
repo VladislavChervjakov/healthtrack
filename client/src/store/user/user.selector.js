@@ -7,3 +7,5 @@ export const selectUserError = (state) => state.user.error;
 export const selectIsSuccess = (state) => state.user.success;
 
 export const selectUserToken = (state) => state.user.userToken;
+
+export const selectUserIsFetching = (state) => state.user.fetching;

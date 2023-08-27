@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   userToken: null,
   error: null,
   success: false,
+  fetching: true,
 };
 
 export const userSlice = createSlice({
@@ -15,6 +16,9 @@ export const userSlice = createSlice({
   reducers: {
     setCurrentUser(state, action) {
       state.currentUser = action.payload;
+    },
+    setIsFetching(state, action) {
+      state.fetching = action.payload;
     },
   },
   extraReducers: {
@@ -25,6 +29,7 @@ export const userSlice = createSlice({
     [loginUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.success = true;
+      state.fetching = false;
       state.currentUser = payload;
       state.userToken = payload.token;
     },
@@ -47,6 +52,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setCurrentUser } = userSlice.actions;
+export const { setCurrentUser, setIsFetching } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

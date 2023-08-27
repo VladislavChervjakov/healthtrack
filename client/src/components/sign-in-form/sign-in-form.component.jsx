@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../store/user/user.actions";
 import {
+  selectCurrentUser,
   selectIsSuccess,
   selectUserError,
 } from "../../store/user/user.selector";
@@ -14,6 +15,7 @@ import {
 } from "../auth-styles/auth-styles";
 import Button, { BUTTON_TYPES } from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
+import Error from "../error/error.component";
 
 const defaultFormFields = {
   email: "",
@@ -29,16 +31,14 @@ const SignInForm = () => {
 
   const success = useSelector(selectIsSuccess);
   const error = useSelector(selectUserError);
+  const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
-    if (success) {
-      console.log(success);
+    if (success || currentUser) {
       resetFormFields();
       navigate("/dashboard");
-    } else if (error) {
-      alert(error);
     }
-  }, [navigate, success, error]);
+  }, [navigate, success, currentUser]);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -48,8 +48,6 @@ const SignInForm = () => {
     event.preventDefault();
 
     dispatch(loginUser(formFields));
-
-    resetFormFields();
   };
 
   const handleChange = (event) => {
@@ -84,6 +82,7 @@ const SignInForm = () => {
           onChange={handleChange}
           value={password}
         />
+        {error ? <Error errorText={error} /> : ""}
         <Button fullWidth={true} buttonType={BUTTON_TYPES.base} type="submit">
           Sign In
         </Button>

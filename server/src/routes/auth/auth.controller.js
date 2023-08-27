@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const {
   createNewUser,
+  getUserById,
   getUserByEmail,
 } = require("../../models/user/user.model");
 const {
@@ -77,7 +78,20 @@ async function httpLogin(req, res) {
   });
 }
 
+async function httpGetUser(req, res) {
+  const userId = +req.user.id;
+  const user = await getUserById(userId);
+  console.log(user);
+
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  return res.status(200).json(user);
+}
+
 module.exports = {
   httpCreateUser,
   httpLogin,
+  httpGetUser,
 };

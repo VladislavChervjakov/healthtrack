@@ -26,7 +26,15 @@ async function getUserByEmail(userEmail) {
   return await userDatabase.findOne({ email: userEmail });
 }
 
+async function getUserById(userId) {
+  return await userDatabase.findOne(
+    { id: userId },
+    { _id: 0, id: 0, __v: 0, password: 0 }
+  );
+}
+
 module.exports = {
   createNewUser,
   getUserByEmail,
+  getUserById,
 };
