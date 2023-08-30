@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentUser, setIsFetching } from "./store/user/user.slice";
 import PrivateRoute from "./routes/private-route/private-route.component";
+import Navigation from "./routes/navigation/navigation.component";
 
 function App() {
   const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
@@ -25,7 +26,9 @@ function App() {
   return (
     <Routes>
       <Route element={<PrivateRoute isUserLoading={isFetching} />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route element={<Navigation />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
       </Route>
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
