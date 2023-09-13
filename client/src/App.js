@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser, setIsFetching } from "./store/user/user.slice";
 import PrivateRoute from "./routes/private-route/private-route.component";
 import Navigation from "./routes/navigation/navigation.component";
+import { getSleeprecords } from "./store/sleeprecords/sleeprecords.actions";
 
 function App() {
   const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
@@ -21,6 +22,7 @@ function App() {
     if (data) {
       dispatch(setCurrentUser(data));
     }
+    dispatch(getSleeprecords());
   }, [data, dispatch, isFetching]);
 
   return (

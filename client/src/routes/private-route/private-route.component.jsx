@@ -5,16 +5,9 @@ import {
   selectUserIsFetching,
 } from "../../store/user/user.selector";
 
-const PrivateRoute = ({
-  redirectPath = "/sign-in",
-  isUserLoading,
-  children,
-}) => {
+const PrivateRoute = ({ redirectPath = "/sign-in", children }) => {
   const currentUser = useSelector(selectCurrentUser);
   const fetching = useSelector(selectUserIsFetching);
-
-  console.log(currentUser);
-  console.log(fetching);
 
   if (!currentUser && !fetching) {
     return <Navigate to={redirectPath} replace />;
