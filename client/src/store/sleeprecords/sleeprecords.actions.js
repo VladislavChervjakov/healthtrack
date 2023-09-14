@@ -16,8 +16,6 @@ export const getSleeprecords = createAsyncThunk(
 
       const { data } = await axios.get(`${API_URL}/sleeprecords`, config);
 
-      console.log(data);
-
       return data;
     } catch (error) {
       return error.response.data.err;

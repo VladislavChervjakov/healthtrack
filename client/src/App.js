@@ -10,6 +10,7 @@ import { setCurrentUser, setIsFetching } from "./store/user/user.slice";
 import PrivateRoute from "./routes/private-route/private-route.component";
 import Navigation from "./routes/navigation/navigation.component";
 import { getSleeprecords } from "./store/sleeprecords/sleeprecords.actions";
+import Sleeprecords from "./routes/sleeprecords/sleeprecords.component";
 
 function App() {
   const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
@@ -30,6 +31,7 @@ function App() {
       <Route element={<PrivateRoute isUserLoading={isFetching} />}>
         <Route element={<Navigation />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/sleeprecords" element={<Sleeprecords />} />
         </Route>
       </Route>
       <Route path="/sign-in" element={<SignIn />} />

@@ -1,11 +1,24 @@
 import Widget from "../../components/widget/widget.component";
 import { DashboardWrapper } from "./dashboard.styles";
+import {
+  selectSleepRecords,
+  selectSleepRecordsError,
+} from "../../store/sleeprecords/sleeprecords.selector";
 
 import { ReactComponent as ActivityIcon } from "../../assets/activity.svg";
 import { ReactComponent as SleepIcon } from "../../assets/sleep.svg";
 import { ReactComponent as GoalsIcon } from "../../assets/goals.svg";
+import { useSelector } from "react-redux";
+import { countSleeprecordsAverageTime } from "../../utils/utils";
 
 const Dashboard = () => {
+  const sleepRecords = useSelector(selectSleepRecords);
+  const isSleepRecordsError = useSelector(selectSleepRecordsError);
+  console.log(isSleepRecordsError);
+  const sleepRecordsAverageTime = !isSleepRecordsError
+    ? countSleeprecordsAverageTime(sleepRecords)
+    : 0;
+
   return (
     <DashboardWrapper>
       <Widget
@@ -18,7 +31,7 @@ const Dashboard = () => {
       <Widget
         image={<SleepIcon />}
         title="Your average sleep"
-        text="9 hours"
+        text={sleepRecordsAverageTime + " hours"}
         fullWidth={false}
         background="#FFF"
       />

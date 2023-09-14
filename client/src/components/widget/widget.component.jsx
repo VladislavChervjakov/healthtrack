@@ -7,14 +7,7 @@ import {
   WidgetButton,
 } from "./widget.styles";
 
-const Widget = ({
-  image,
-  title,
-  text,
-  background,
-  buttonLink = "",
-  fullWidth = false,
-}) => {
+const Widget = ({ image, title, text, background, buttonLink = "" }) => {
   return (
     <WidgetWrapper background={background}>
       <WidgetContent>
