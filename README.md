@@ -1,1 +1,1 @@
-Jus trainig projrct to practice skill in react and express
+Jus trainig projrct to practice skills in react and express
