@@ -5,7 +5,7 @@ const API_URL = "http://localhost:8000/v1";
 
 export const getSleeprecords = createAsyncThunk(
   "sleeprecords/getSleeprecords",
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
       const config = {
         withCredentials: true,
@@ -18,7 +18,11 @@ export const getSleeprecords = createAsyncThunk(
 
       return data;
     } catch (error) {
-      return error.response.data.err;
+      if (error.response.data && error.response.data.err) {
+        return rejectWithValue(error.response.data.err);
+      } else {
+        return rejectWithValue(error);
+      }
     }
   }
 );

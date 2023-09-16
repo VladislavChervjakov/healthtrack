@@ -5,9 +5,9 @@ import {
 } from "./control-widget.styles";
 import Button from "../button/button.component";
 
-const ControlWidget = ({ children, heading }) => {
+const ControlWidget = ({ children, heading, background }) => {
   return (
-    <ControlWidgetWrapper>
+    <ControlWidgetWrapper background={background}>
       <ControlwidgetHeading>{heading}</ControlwidgetHeading>
       {children}
       <ControlWidgetButtons>
